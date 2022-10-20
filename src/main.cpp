@@ -1,35 +1,7 @@
 #include <Arduino.h>
-/*********************************************************
-This is a library for the MPR121 12-channel clickWheelacitive touch sensor
-
-Designed specifically to work with the MPR121 Breakout in the Adafruit shop 
-  ----> https://www.adafruit.com/products/
-
-These sensors use I2C communicate, at least 2 pins are required 
-to interface
-
-Adafruit invests time and resources providing this open source code, 
-please support Adafruit and open-source hardware by purchasing 
-products from Adafruit!
-
-Written by Limor Fried/Ladyada for Adafruit Industries.  
-BSD license, all text above must be included in any redistribution
-**********************************************************/
-
-#include <Wire.h>
 #include "clickwheel.h"
 
-#ifndef _BV
-#define _BV(bit) (1 << (bit)) 
-#endif
-
-// You can have up to 4 on one i2c bus but one is enough for testing!
 ClickWheel clickWheel = ClickWheel();
-
-// Keeps track of the last pins touched
-// so we know when buttons are 'released'
-uint16_t lasttouched = 0;
-uint16_t currtouched = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -54,42 +26,8 @@ void setup() {
 }
 
 void loop() {
-  // Get the currently touched pads
   int16_t deltaWheel = clickWheel.getWheelIncrement();  
-    Serial.print("deltaWheel "); Serial.println(deltaWheel);
-
-/*  currtouched = clickWheel.touched();
-  
-  for (uint8_t i=0; i<12; i++) {
-    // it if *is* touched and *wasnt* touched before, alert!
-    if ((currtouched & _BV(i)) && !(lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" touched");
-    }
-    // if it *was* touched and now *isnt*, alert!
-    if (!(currtouched & _BV(i)) && (lasttouched & _BV(i)) ) {
-      Serial.print(i); Serial.println(" released");
-    }
-  }
-
-  // reset our state
-  lasttouched = currtouched;
-
-  // comment out this line for detailed data from the sensor!
-  return;
-  
-  // debugging info, what
-  Serial.print("\t\t\t\t\t\t\t\t\t\t\t\t\t 0x"); Serial.println(clickWheel.touched(), HEX);
-  Serial.print("Filt: ");
-  for (uint8_t i=0; i<12; i++) {
-    Serial.print(clickWheel.filteredData(i)); Serial.print("\t");
-  }
-  Serial.println();
-  Serial.print("Base: ");
-  for (uint8_t i=0; i<12; i++) {
-    Serial.print(clickWheel.baselineData(i)); Serial.print("\t");
-  }
-  Serial.println();
-  */
-  // put a delay so it isn't overwhelming
+  Serial.print("deltaWheel ");
+  Serial.println(deltaWheel);
   delay(100);
 }
