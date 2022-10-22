@@ -182,7 +182,7 @@ int16_t ClickWheel::getWheelAngle(void) {
 
 int16_t ClickWheel::getWheelIncrement(void) {
   int16_t curWheelAngle = getWheelAngle();
-  int16_t wheelAnglePerTick = 10;
+  int16_t wheelAnglePerTick = 1;
   
   // Case 1: Wheel is not being touched)
   if (curWheelAngle == -1) {
@@ -193,7 +193,7 @@ int16_t ClickWheel::getWheelIncrement(void) {
   // Case 2: Wheel has just started being touched
   if ((lastWheelAngle == -1) && (curWheelAngle > -1)) {
     lastWheelAngle = curWheelAngle;
-    return 0;
+    return -lastWheelAngle;
   }
   
   // Case 3: Wheel was touched previously, and is currently being touched

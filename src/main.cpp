@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "clickwheel.h"
+#include <clickwheel.h>
 
 ClickWheel clickWheel = ClickWheel();
 
@@ -19,7 +19,7 @@ void setup() {
     while (1);
   }
   Serial.println("MPR121 found!");
-  clickWheel.initTouchWheel(4, -20 ,1);
+  clickWheel.initTouchWheel(4, -130 ,1);
   delay(100);
   clickWheel.takeWheelBaseline();
 
@@ -29,5 +29,7 @@ void loop() {
   int16_t deltaWheel = clickWheel.getWheelIncrement();  
   Serial.print("deltaWheel ");
   Serial.println(deltaWheel);
+  Serial.print("angle ");
+  Serial.print(clickWheel.lastWheelAngle);
   delay(100);
 }
